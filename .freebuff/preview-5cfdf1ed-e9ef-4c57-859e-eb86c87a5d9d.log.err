@@ -1,0 +1,112 @@
+[browser] ./src/components/Certifications.tsx:89:14
+Error: Expected ',', got '['
+  87 |
+  88 | function Lightbox({
+> 89 |   certs: Cert[];
+     |              ^
+  90 |   initialIndex: number;
+  91 |   onClose: () => void;
+  92 | }) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/Certifications.tsx
+    ./src/app/page.tsx 
+[browser] ./src/components/Certifications.tsx:89:14
+Error: Expected ',', got '['
+  87 |
+  88 | function Lightbox({
+> 89 |   certs: Cert[];
+     |              ^
+  90 |   initialIndex: number;
+  91 |   onClose: () => void;
+  92 | }) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/Certifications.tsx
+    ./src/app/page.tsx 
+[browser] ./src/components/Certifications.tsx:89:14
+Error: Expected ',', got '['
+  87 |
+  88 | function Lightbox({
+> 89 |   certs: Cert[];
+     |              ^
+  90 |   initialIndex: number;
+  91 |   onClose: () => void;
+  92 | }) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/Certifications.tsx
+    ./src/app/page.tsx 
+[browser] ./src/components/Certifications.tsx:89:14
+Error: Expected ',', got '['
+  87 |
+  88 | function Lightbox({
+> 89 |   certs: Cert[];
+     |              ^
+  90 |   initialIndex: number;
+  91 |   onClose: () => void;
+  92 | }) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/Certifications.tsx
+    ./src/app/page.tsx 
+[browser] ./src/components/Certifications.tsx:89:14
+Error: Expected ',', got '['
+  87 |
+  88 | function Lightbox({
+> 89 |   certs: Cert[];
+     |              ^
+  90 |   initialIndex: number;
+  91 |   onClose: () => void;
+  92 | }) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/Certifications.tsx
+    ./src/app/page.tsx 
+[browser] ./src/components/Certifications.tsx:89:14
+Error: Expected ',', got '['
+  87 |
+  88 | function Lightbox({
+> 89 |   certs: Cert[];
+     |              ^
+  90 |   initialIndex: number;
+  91 |   onClose: () => void;
+  92 | }) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/Certifications.tsx
+    ./src/app/page.tsx 
+[browser] ./src/components/Certifications.tsx:89:14
+Error: Expected ',', got '['
+  87 |
+  88 | function Lightbox({
+> 89 |   certs: Cert[];
+     |              ^
+  90 |   initialIndex: number;
+  91 |   onClose: () => void;
+  92 | }) {
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./src/components/Certifications.tsx
+    ./src/app/page.tsx 
