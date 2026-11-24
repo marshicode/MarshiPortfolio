@@ -319,11 +319,6 @@ body {
   }
 }
 
-/* ─── Hero media ─── */
-.hero-media {
-  mask-image: radial-gradient(75% 70% at 50% 40%, #000 30%, transparent 78%);
-  -webkit-mask-image: radial-gradient(75% 70% at 50% 40%, #000 30%, transparent 78%);
-}
 
 .scroll-cue {
   animation: cue 2.4s var(--ease-out) infinite;

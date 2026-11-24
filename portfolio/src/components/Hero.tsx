@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Hero() {
   return (
     <section
@@ -7,19 +5,10 @@ export default function Hero() {
       aria-labelledby="hero-title"
       className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden pb-24 pt-32"
     >
-      {/* Owner's portrait: grayscale cutout, dimmed, under a vignette */}
+      {/* Soft monochrome glow behind the headline, under a vignette */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <div data-hero-parallax className="absolute inset-0">
-          <div data-hero-media className="hero-media absolute inset-x-0 top-[12%] bottom-[22%] sm:top-[6%] sm:bottom-0 mx-auto max-w-[1100px]">
-            <Image
-              src="/profile-cutout.webp"
-              alt=""
-              fill
-              priority
-              sizes="(max-width: 1100px) 100vw, 1100px"
-              className="object-contain object-bottom opacity-[0.34]"
-            />
-          </div>
+          <div data-hero-media className="absolute inset-x-0 top-[10%] bottom-[10%] mx-auto max-w-[1100px] bg-[radial-gradient(50%_45%_at_50%_45%,rgba(245,245,247,0.07),transparent_70%)]" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,transparent,rgba(5,5,5,0.85)_75%)]" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#050505] to-transparent" />
