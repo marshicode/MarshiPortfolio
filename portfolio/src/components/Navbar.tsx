@@ -1,150 +1,119 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Menu, X, Code2, Sun, Moon } from "lucide-react";
-import { useTheme } from "@/context/ThemeContext";
+import { useEffect, useRef, useState } from "react";
 
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
   { label: "Certifications", href: "#certifications" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const { theme, toggle } = useTheme();
+  const [active, setActive] = useState("");
+  const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
+  // Highlight the section in the middle of the viewport.
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 50);
-
-      const sections = navLinks.map((l) => l.href.replace("#", ""));
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.getBoundingClientRect().top <= 150) {
-          setActiveSection(sections[i]);
-          return;
-        }
-      }
-      setActiveSection("");
-    };
-
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const ids = [...navLinks.map((l) => l.href.slice(1)), "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-nav-bg/80 backdrop-blur-xl border-b border-card-border shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+    <header className="fixed inset-x-0 top-3.5 z-50 px-3.5">
+      <nav
+        aria-label="Primary"
+        className="glass mx-auto flex h-[60px] max-w-[1180px] items-center justify-between rounded-full pl-6 pr-2"
+      >
         <a
-          href="#"
-          className="flex items-center gap-2 text-xl font-bold tracking-tight group"
+          href="#top"
+          className="text-[1.35rem] font-bold tracking-[-0.05em]"
+          aria-label="Marshi, back to top"
         >
-          <Code2 className="w-5 h-5 text-accent group-hover:rotate-12 transition-transform duration-300" />
-          <span>
-            <span className="text-accent">M</span>arshi
-          </span>
+          Marshi
         </a>
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
-          <ul className="flex items-center gap-1 mr-3">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.href.replace("#", "");
-              return (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className={`nav-link px-3 py-2 text-sm transition-colors duration-200 ${
-                      isActive
-                        ? "text-accent"
-                        : "text-text-secondary hover:text-foreground"
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Theme toggle */}
-          <button
-            onClick={toggle}
-            className="theme-toggle"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-          >
-            {theme === "dark" ? (
-              <Sun className="w-4 h-4 text-yellow-400" />
-            ) : (
-              <Moon className="w-4 h-4 text-indigo-500" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile right side */}
-        <div className="flex md:hidden items-center gap-2">
-          <button
-            onClick={toggle}
-            className="theme-toggle !w-9 !h-9"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-          >
-            {theme === "dark" ? (
-              <Sun className="w-4 h-4 text-yellow-400" />
-            ) : (
-              <Moon className="w-4 h-4 text-indigo-500" />
-            )}
-          </button>
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="text-text-secondary hover:text-accent transition-all duration-300 p-2 hover:bg-card-bg rounded-lg"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ${
-          mobileOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="bg-nav-bg/95 backdrop-blur-xl border-b border-card-border">
-          <ul className="flex flex-col items-center gap-1 py-4">
-            {navLinks.map((link, i) => (
-              <li
-                key={link.href}
-                className="transition-all duration-300"
-                style={{ transitionDelay: `${i * 50}ms` }}
+        <ul className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="nav-link"
+                aria-current={active === link.href.slice(1) ? "true" : undefined}
               >
-                <a
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-6 py-2 text-sm text-text-secondary hover:text-accent transition-colors duration-200"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <a href="#contact" className="btn btn-primary btn-sm">
+            Contact
+          </a>
+          <button
+            ref={menuButton}
+            type="button"
+            className="icon-btn md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
+          >
+            <span className="relative block h-3 w-4" aria-hidden="true">
+              <span
+                className={`absolute left-0 h-[1.5px] w-4 bg-current transition-transform duration-300 ${open ? "top-[5px] rotate-45" : "top-0.5"}`}
+              />
+              <span
+                className={`absolute left-0 h-[1.5px] w-4 bg-current transition-transform duration-300 ${open ? "top-[5px] -rotate-45" : "top-[9px]"}`}
+              />
+            </span>
+          </button>
         </div>
+      </nav>
+
+      <div
+        id="mobile-menu"
+        hidden={!open}
+        className="glass mx-auto mt-2 max-w-[1180px] rounded-[28px] p-3 md:hidden"
+      >
+        <ul>
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="block rounded-2xl px-4 py-3.5 text-2xl font-semibold tracking-[-0.03em] hover:bg-white/5"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-    </nav>
+    </header>
   );
 }

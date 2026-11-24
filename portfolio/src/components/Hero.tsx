@@ -1,88 +1,72 @@
-import { ArrowDown, Sparkles } from "lucide-react";
-import TypeWriter from "./TypeWriter";
+import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center section-padding pt-24 relative">
-      {/* Blob decorations */}
-      <div className="blob-bg" aria-hidden="true">
-        <div
-          className="blob"
-          style={{
-            width: 600,
-            height: 600,
-            background: "var(--accent)",
-            top: "10%",
-            left: "10%",
-            animationDelay: "0s",
-          }}
-        />
-        <div
-          className="blob"
-          style={{
-            width: 400,
-            height: 400,
-            background: "#a78bfa",
-            bottom: "10%",
-            right: "10%",
-            animationDelay: "-7s",
-          }}
-        />
-      </div>
-
-      <div className="max-w-4xl mx-auto text-center relative z-10">
-        <div className="animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/5 border border-accent/10 text-accent text-xs font-mono tracking-wider mb-8">
-            <Sparkles className="w-3.5 h-3.5" />
-            OPEN TO OPPORTUNITIES
+    <section
+      id="top"
+      aria-labelledby="hero-title"
+      className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden pb-24 pt-32"
+    >
+      {/* Owner's portrait: grayscale cutout, dimmed, under a vignette */}
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
+        <div data-hero-parallax className="absolute inset-0">
+          <div data-hero-media className="hero-media absolute inset-x-0 top-[12%] bottom-[22%] sm:top-[6%] sm:bottom-0 mx-auto max-w-[1100px]">
+            <Image
+              src="/profile-cutout.webp"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 1100px) 100vw, 1100px"
+              className="object-contain object-bottom opacity-[0.34]"
+            />
           </div>
         </div>
+        <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,transparent,rgba(5,5,5,0.85)_75%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#050505] to-transparent" />
+      </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 animate-fade-in-up">
-          Hi, I&apos;m{" "}
-          <span className="gradient-text">Marshi</span>
-        </h1>
-
-        {/* Typing animation */}
-        <div className="text-xl sm:text-2xl md:text-3xl font-mono mb-8 animate-fade-in-up h-10">
-          <TypeWriter
-            words={[
-              "Full-Stack Developer",
-              "Problem Solver",
-              "Student Engineer",
-              "UI Enthusiast",
-            ]}
-            typingSpeed={70}
-            deletingSpeed={40}
-            pauseTime={2000}
-          />
-        </div>
-
-        <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed mb-10 animate-fade-in-up">
-          I build real-world web applications from concept to deployment.
-          Turning ideas into shipped software with modern full-stack tools.
+      <div className="wrap flex flex-col items-center text-center">
+        <p data-hero-fade className="badge mb-8 sm:mb-10">
+          <span className="dot" aria-hidden="true" />
+          Open to opportunities · Cebu City
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up">
-          <a
-            href="#projects"
-            className="btn-shine group px-8 py-3.5 bg-accent text-background font-medium rounded-xl hover:bg-accent-dim transition-all duration-300 flex items-center gap-2 hover:gap-3"
-          >
-            View My Work
-            <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
-          </a>
-          <a
-            href="#contact"
-            className="btn-shine px-8 py-3.5 border border-card-border text-foreground font-medium rounded-xl hover:border-accent/50 hover:text-accent hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
-          >
-            Get In Touch
-          </a>
-        </div>
+        <h1 id="hero-title" className="h-hero">
+          <span data-hero-line className="line">
+            <span>Hi, I&apos;m Marshi.</span>
+          </span>
+          <span data-hero-line className="line tone-dim">
+            <span>I build for the web.</span>
+          </span>
+        </h1>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <ArrowDown className="w-5 h-5 text-text-muted" />
+        <p data-hero-fade className="lead mt-8 max-w-[40ch] text-balance sm:mt-10">
+          I build real-world web applications from concept to deployment. Turning ideas
+          into shipped software with modern full-stack tools.
+        </p>
+
+        <div
+          data-hero-fade
+          className="mt-10 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center"
+        >
+          <a href="#projects" className="btn btn-primary">
+            View work
+          </a>
+          <a href="#contact" className="btn btn-secondary">
+            Contact
+          </a>
         </div>
+      </div>
+
+      <div
+        data-hero-fade
+        className="absolute bottom-8 left-[var(--gutter)] hidden items-center gap-3 sm:flex"
+        aria-hidden="true"
+      >
+        <span className="relative h-10 w-px overflow-hidden bg-white/10">
+          <span className="scroll-cue absolute inset-0 bg-white/70" />
+        </span>
+        <span className="label">Scroll</span>
       </div>
     </section>
   );

@@ -1,16 +1,11 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Rethink_Sans } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/context/ThemeContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const rethink = Rethink_Sans({
+  variable: "--font-rethink",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,28 +21,22 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#050505",
+  colorScheme: "dark",
+};
+
+// Runs before paint: hide reveal targets only when JS runs and motion is allowed.
+// If the motion bundle never boots, the class is removed so content is never stuck hidden.
+const motionGate = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('motion');setTimeout(function(){if(!window.__motionReady)d.classList.remove('motion')},2500)}catch(e){}})();`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${rethink.variable} antialiased`} suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var t = localStorage.getItem('theme');
-                if (t === 'light') document.documentElement.className = document.documentElement.className.replace(/dark/g, 'light');
-              })();
-            `,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: motionGate }} />
       </head>
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
+      <body className="min-h-dvh flex flex-col">{children}</body>
     </html>
   );
 }

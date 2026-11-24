@@ -1,170 +1,96 @@
-import {
-  MapPin,
-  Target,
-  GraduationCap,
-  User,
-  Mail,
-  Phone,
-  Calendar,
-  BookOpen,
-  Briefcase,
-} from "lucide-react";
+import { Lines, contact } from "./ui";
+
+const details = [
+  { label: "Full name", value: "Rene James Aleonar" },
+  { label: "Email", value: contact.email, href: `mailto:${contact.email}` },
+  { label: "Location", value: "Cebu City, Philippines" },
+  { label: "Availability", value: "Open to opportunities" },
+  { label: "Education", value: "BS Information Technology" },
+  { label: "University", value: "University of Cebu – CCS" },
+  { label: "Interest", value: "Full-stack development" },
+];
+
+// Every figure comes from the content on this page.
+const stats = [
+  { value: "16", label: "Technologies", text: "Across frontend, backend, databases and tooling." },
+  { value: "8", label: "Features shipped", text: "In the Sit-in Monitoring System, from reservations to analytics." },
+  { value: "2", label: "Certificates", text: "Cisco CCNA coursework and the 12th UC CCS ICT Congress." },
+  { value: "1", label: "Live app", text: "Deployed and public at ccs-sitin-aleonar.vercel.app." },
+];
 
 export default function About() {
   return (
-    <section id="about" className="section-padding">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-3 mb-10 reveal visible">
-          <User className="w-5 h-5 text-accent" />
-          <h2 className="text-sm font-mono text-accent tracking-widest uppercase">
-            About Me
-          </h2>
-        </div>
+    <section id="about" aria-labelledby="about-title" className="py-[clamp(90px,11vw,150px)]">
+      <div className="wrap">
+        <Lines
+          id="about-title"
+          className="h-section max-w-[16ch]"
+          lines={["I learn by building.", "Every project solves a real problem."]}
+        />
 
-        <div className="grid lg:grid-cols-5 gap-10">
-          {/* Left: Bio */}
-          <div className="lg:col-span-3 space-y-5 reveal visible reveal-delay-1">
-            <p className="text-text-secondary leading-relaxed text-base">
+        <div className="mt-[clamp(56px,7vw,104px)] grid gap-14 lg:grid-cols-12 lg:gap-8">
+          <dl data-reveal className="lg:col-span-5 border-t border-line">
+            {details.map((d) => (
+              <div
+                key={d.label}
+                className="grid grid-cols-[minmax(7.5rem,40%)_1fr] gap-4 border-b border-line py-4"
+              >
+                <dt className="label self-center">{d.label}</dt>
+                <dd className="min-w-0 break-words text-[0.98rem] text-[color:var(--fg-86)]">
+                  {d.href ? (
+                    <a href={d.href} className="underline decoration-white/25 underline-offset-4 hover:decoration-white">
+                      {d.value}
+                    </a>
+                  ) : (
+                    d.value
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="space-y-6 lg:col-span-6 lg:col-start-7">
+            <p data-reveal className="lead">
               I&apos;m a student at the University of Cebu, College of Information &amp;
-              Computer Studies, pursuing a career in full-stack software engineering.
-              I believe in learning by building — every project I take on is a chance
-              to solve a real problem with real users.
+              Computer Studies, pursuing a career in full-stack software engineering. I
+              believe in learning by building — every project I take on is a chance to
+              solve a real problem with real users.
             </p>
-            <p className="text-text-secondary leading-relaxed text-base">
-              My approach is practical: pick the right tools for the job, ship it,
-              and iterate. I&apos;m comfortable across the stack — from designing
-              interfaces to building APIs to deploying on the cloud. I&apos;m
-              always looking for the next thing to build and the next problem to solve.
+            <p data-reveal className="body-copy max-w-[60ch]">
+              My approach is practical: pick the right tools for the job, ship it, and
+              iterate. I&apos;m comfortable across the stack — from designing interfaces
+              to building APIs to deploying on the cloud. I&apos;m always looking for the
+              next thing to build and the next problem to solve.
             </p>
-
-            {/* Quick info pills */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              <InfoPill icon={<MapPin className="w-3.5 h-3.5" />} label="Cebu, Philippines" />
-              <InfoPill icon={<Target className="w-3.5 h-3.5" />} label="Full-Stack Web Dev" />
-              <InfoPill icon={<GraduationCap className="w-3.5 h-3.5" />} label="BS Information Technology" />
-            </div>
-          </div>
-
-          {/* Right: Personal Information card */}
-          <div className="lg:col-span-2 reveal visible reveal-delay-2">
-            <PersonalInfoCard />
+            <ul data-reveal className="flex flex-wrap gap-2 pt-2" aria-label="At a glance">
+              {["Cebu, Philippines", "Full-stack web dev", "BS Information Technology"].map((t) => (
+                <li key={t} className="tag">
+                  {t}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+
+        <ul
+          className="panel mt-[clamp(72px,9vw,128px)] grid overflow-hidden sm:grid-cols-2 lg:grid-cols-4"
+          aria-label="By the numbers"
+        >
+          {stats.map((s, i) => (
+            <li
+              key={s.label}
+              data-reveal
+              className={`p-7 sm:p-8 ${i > 0 ? "border-t border-line" : ""} ${i === 1 ? "sm:border-t-0 sm:border-l" : ""} ${i === 2 ? "lg:border-t-0 lg:border-l" : ""} ${i === 3 ? "sm:border-l lg:border-t-0" : ""}`}
+            >
+              <p className="text-[clamp(3rem,4.6vw,4.1rem)] font-semibold leading-none tracking-[-0.05em]">
+                {s.value}
+              </p>
+              <p className="label mt-5 text-[color:var(--fg)]">{s.label}</p>
+              <p className="body-copy mt-2 text-[0.95rem] leading-relaxed">{s.text}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
-  );
-}
-
-function InfoPill({
-  icon,
-  label,
-}: {
-  icon: React.ReactNode;
-  label: string;
-}) {
-  return (
-    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-card-bg border border-card-border text-xs text-text-secondary">
-      <span className="text-accent">{icon}</span>
-      {label}
-    </div>
-  );
-}
-
-function PersonalInfoCard() {
-  const info = [
-    {
-      icon: <User className="w-4 h-4" />,
-      label: "Full Name",
-      value: "Rene James Aleonar",
-    },
-    {
-      icon: <Mail className="w-4 h-4" />,
-      label: "Email",
-      value: "renejamesaleonar27@gmail.com",
-      href: "mailto:renejamesaleonar27@gmail.com",
-    },
-    {
-      icon: <MapPin className="w-4 h-4" />,
-      label: "Location",
-      value: "Cebu City, Philippines",
-    },
-    {
-      icon: <Calendar className="w-4 h-4" />,
-      label: "Availability",
-      value: "Open to Opportunities",
-    },
-    {
-      icon: <GraduationCap className="w-4 h-4" />,
-      label: "Education",
-      value: "BS Information Technology",
-    },
-    {
-      icon: <BookOpen className="w-4 h-4" />,
-      label: "University",
-      value: "University of Cebu - CCS",
-    },
-    {
-      icon: <Briefcase className="w-4 h-4" />,
-      label: "Interest",
-      value: "Full-Stack Development",
-    },
-  ];
-
-  return (
-    <div className="card-glow rounded-2xl border border-card-border bg-card-bg overflow-hidden">
-      {/* Profile picture + Header */}
-      <div className="relative">
-        <div className="h-24 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent" />
-        <div className="absolute -bottom-10 left-6">
-          <div className="w-20 h-20 rounded-2xl border-4 border-card-bg overflow-hidden bg-card-bg shadow-lg">
-            <img
-              src="/profile.png"
-              alt="Rene James Aleonar"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Name + role */}
-      <div className="px-6 pt-14 pb-3">
-        <h3 className="text-lg font-bold text-foreground">Rene James Aleonar</h3>
-        <p className="text-xs text-accent font-mono">Full-Stack Developer</p>
-      </div>
-
-      {/* Divider */}
-      <div className="px-6 border-t border-card-border">
-        <h4 className="text-[10px] font-mono text-text-muted tracking-wider uppercase py-3">
-          Details
-        </h4>
-      </div>
-
-      {/* Info rows */}
-      <div className="divide-y divide-card-border">
-        {info.map((item) => (
-          <div
-            key={item.label}
-            className="px-6 py-3 flex items-center gap-4 hover:bg-accent/5 transition-colors duration-200"
-          >
-            <span className="text-accent flex-shrink-0">{item.icon}</span>
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-mono text-text-muted tracking-wider uppercase">
-                {item.label}
-              </p>
-              {item.href ? (
-                <a
-                  href={item.href}
-                  className="text-sm text-text-secondary hover:text-accent transition-colors truncate block"
-                >
-                  {item.value}
-                </a>
-              ) : (
-                <p className="text-sm text-text-secondary truncate">{item.value}</p>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }

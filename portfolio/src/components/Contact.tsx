@@ -1,92 +1,170 @@
-import { Mail, Send } from "lucide-react";
+"use client";
 
-function GithubIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-    </svg>
-  );
-}
+import { useState, type FormEvent } from "react";
+import { ArrowUpRight, Mail } from "lucide-react";
+import { GithubIcon, LinkedinIcon, Lines, XIcon, contact } from "./ui";
 
-function LinkedinIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-    </svg>
-  );
-}
-
-function TwitterIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
-
-const socials = [
-  {
-    icon: <GithubIcon className="w-5 h-5" />,
-    href: "https://github.com/marshicode",
-    label: "GitHub",
-  },
-  {
-    icon: <LinkedinIcon className="w-5 h-5" />,
-    href: "https://www.linkedin.com/in/rene-james-aleonar-495bb03b5/",
-    label: "LinkedIn",
-  },
-  {
-    icon: <TwitterIcon className="w-5 h-5" />,
-    href: "https://twitter.com",
-    label: "Twitter",
-  },
-  {
-    icon: <Mail className="w-5 h-5" />,
-    href: "mailto:renejamesaleonar27@gmail.com",
-    label: "Email",
-  },
+const links = [
+  { label: "Email", value: contact.email, href: `mailto:${contact.email}`, icon: Mail },
+  { label: "GitHub", value: "marshicode", href: contact.github, icon: GithubIcon },
+  { label: "LinkedIn", value: "Rene James Aleonar", href: contact.linkedin, icon: LinkedinIcon },
+  { label: "Twitter", value: "X / Twitter", href: contact.twitter, icon: XIcon },
 ];
 
-export default function Contact() {
-  return (
-    <section id="contact" className="section-padding">
-      <div className="max-w-4xl mx-auto text-center">
-        <div className="flex items-center justify-center gap-3 mb-4 reveal visible">
-          <Send className="w-5 h-5 text-accent" />
-          <h2 className="text-sm font-mono text-accent tracking-widest uppercase">
-            Get In Touch
-          </h2>
-        </div>
-        <p className="text-text-secondary max-w-lg mx-auto mb-8 leading-relaxed reveal visible reveal-delay-1">
-          I&apos;m always open to discussing new projects, creative ideas, or
-          opportunities to be part of something great.
-        </p>
-        <a
-          href="mailto:renejamesaleonar27@gmail.com"
-          className="btn-shine inline-flex items-center gap-2 px-8 py-3.5 bg-accent text-background font-medium rounded-xl hover:bg-accent-dim transition-all duration-300 mb-12 reveal visible reveal-delay-2"
-        >
-          <Mail className="w-4 h-4" />
-          Say Hello
-        </a>
+type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
-        {/* Social links */}
-        <div className="flex items-center justify-center gap-5 reveal visible reveal-delay-3">
-          {socials.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target={social.href.startsWith("mailto") ? undefined : "_blank"}
-              rel="noopener noreferrer"
-              className="group p-3 rounded-xl border border-card-border text-text-muted hover:text-accent hover:border-accent/30 hover:bg-accent/5 transition-all duration-300"
-              aria-label={social.label}
-            >
-              <span className="block group-hover:scale-110 transition-transform duration-300">
-                {social.icon}
-              </span>
+function validate(data: FormData): Errors {
+  const errors: Errors = {};
+  const name = String(data.get("name") ?? "").trim();
+  const email = String(data.get("email") ?? "").trim();
+  const message = String(data.get("message") ?? "").trim();
+  if (!name) errors.name = "Enter your name.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Enter an email address like name@example.com.";
+  if (message.length < 10) errors.message = "Write at least 10 characters so I know what it's about.";
+  return errors;
+}
+
+export default function Contact() {
+  const [errors, setErrors] = useState<Errors>({});
+  const [sent, setSent] = useState(false);
+
+  // No server: the form drafts an email in the visitor's own mail app.
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const found = validate(data);
+    setErrors(found);
+    if (Object.keys(found).length) {
+      const first = Object.keys(found)[0];
+      e.currentTarget.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      return;
+    }
+    const name = String(data.get("name")).trim();
+    const subject = encodeURIComponent(`Hello from ${name}`);
+    const body = encodeURIComponent(`${String(data.get("message")).trim()}\n\n${name}\n${String(data.get("email")).trim()}`);
+    window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
+  return (
+    <section id="contact" aria-labelledby="contact-title" className="relative py-[clamp(110px,13vw,170px)]">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(50rem_28rem_at_50%_25%,rgba(255,255,255,0.07),transparent_70%)]"
+        aria-hidden="true"
+      />
+      <div className="wrap">
+        <div className="flex flex-col items-center text-center">
+          <Lines
+            id="contact-title"
+            className="h-section max-w-[14ch]"
+            lines={["Have an idea?", "Let's build it."]}
+          />
+          <p data-reveal className="lead mt-8 max-w-[40ch]">
+            I&apos;m always open to discussing new projects, creative ideas, or
+            opportunities to be part of something great.
+          </p>
+          <div data-reveal className="mt-10">
+            <a href={`mailto:${contact.email}`} className="btn btn-primary">
+              <Mail className="h-4 w-4" aria-hidden="true" />
+              Say hello
             </a>
-          ))}
+          </div>
+        </div>
+
+        <div className="mt-[clamp(72px,9vw,120px)] grid grid-cols-1 gap-4 lg:grid-cols-12">
+          <form data-reveal noValidate onSubmit={onSubmit} className="panel min-w-0 p-6 sm:p-10 lg:col-span-7" aria-labelledby="form-title">
+            <h3 id="form-title" className="text-[1.6rem] font-semibold tracking-[-0.03em]">
+              Send a message
+            </h3>
+            <p className="body-copy mt-1 text-[0.95rem]">This opens your mail app with the message ready to send.</p>
+
+            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <Field label="Name" name="name" autoComplete="name" error={errors.name} />
+              <Field label="Email" name="email" type="email" autoComplete="email" error={errors.email} />
+              <div className="sm:col-span-2">
+                <Field label="Message" name="message" multiline error={errors.message} />
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-5">
+              <button type="submit" className="btn btn-primary">
+                Write the email
+              </button>
+              <p className="text-sm text-[color:var(--fg-66)]" role="status">
+                {sent ? "Your mail app should open with the message. Send it from there." : ""}
+              </p>
+            </div>
+          </form>
+
+          <ul data-reveal className="panel flex min-w-0 flex-col p-3 lg:col-span-5" aria-label="Elsewhere">
+            {links.map(({ label, value, href, icon: Icon }) => (
+              <li key={label} className="border-b border-line last:border-b-0">
+                <a
+                  href={href}
+                  target={href.startsWith("mailto") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 rounded-[18px] px-4 py-5 transition-colors hover:bg-white/[0.04]"
+                >
+                  <span className="icon-btn shrink-0">
+                    <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="label block">{label}</span>
+                    <span className="block truncate text-[1.02rem] text-[color:var(--fg-86)]">{value}</span>
+                  </span>
+                  <ArrowUpRight
+                    className="h-5 w-5 shrink-0 text-[color:var(--fg-52)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+                    aria-hidden="true"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
+  );
+}
+
+function Field({
+  label,
+  name,
+  type = "text",
+  autoComplete,
+  multiline,
+  error,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  autoComplete?: string;
+  multiline?: boolean;
+  error?: string;
+}) {
+  const id = `field-${name}`;
+  const errId = `${id}-error`;
+  const shared = {
+    id,
+    name,
+    className: "field",
+    "aria-invalid": error ? true : undefined,
+    "aria-describedby": error ? errId : undefined,
+  };
+  return (
+    <div>
+      <label htmlFor={id} className="mb-2 block text-sm font-semibold text-[color:var(--fg-86)]">
+        {label}
+      </label>
+      {multiline ? (
+        <textarea {...shared} rows={5} className="field resize-y" />
+      ) : (
+        <input {...shared} type={type} autoComplete={autoComplete} />
+      )}
+      {error && (
+        <p id={errId} className="mt-2 text-sm text-[#ff9b9b]">
+          {error}
+        </p>
+      )}
+    </div>
   );
 }

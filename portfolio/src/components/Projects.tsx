@@ -1,144 +1,165 @@
-import {
-  Folder,
-  ExternalLink,
-  Server,
-  Database,
-  Shield,
-  Users,
-  BarChart3,
-  Bell,
-  MessageSquare,
-  Package,
-  Smartphone,
-  Monitor,
-} from "lucide-react";
-import TiltCard from "./TiltCard";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import { GithubIcon, Lines } from "./ui";
 
-function GithubIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-    </svg>
-  );
-}
+const project = {
+  title: "Sit-in Monitoring System",
+  kind: "Full-stack web application · UC CICS",
+  live: "https://ccs-sitin-aleonar.vercel.app",
+  source: "https://github.com/marshicode/sitin-monitoring-system",
+  description:
+    "A full-stack web application designed to automate and streamline the tracking of students using computer laboratories at UC CICS. Features real-time session management, online reservations, leaderboards, notifications, and a comprehensive admin dashboard.",
+  features: [
+    "Student registration & authentication",
+    "Lab reservation system",
+    "Real-time session tracking",
+    "Admin dashboard & analytics",
+    "Leaderboard & gamification",
+    "Notification & announcement system",
+    "Feedback & reporting",
+    "Lab software inventory",
+  ],
+  stack: ["Express.js", "Node.js", "Turso/LibSQL", "bcrypt", "Multer", "Vercel"],
+};
 
 export default function Projects() {
   return (
-    <section id="projects" className="section-padding">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-3 mb-10 reveal visible">
-          <Folder className="w-5 h-5 text-accent" />
-          <h2 className="text-sm font-mono text-accent tracking-widest uppercase">
-            Projects
-          </h2>
+    <section id="projects" aria-labelledby="projects-title" className="py-[clamp(80px,9vw,120px)]">
+      <div className="wrap">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <Lines
+            id="projects-title"
+            className="h-section"
+            lines={["From idea to live.", "Built for real users."]}
+          />
+          <a
+            href="https://github.com/marshicode"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 pb-2 text-[0.95rem] font-semibold"
+          >
+            All repositories on GitHub
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+          </a>
         </div>
 
-        <div className="space-y-6">
-          {/* Featured Project */}
-          <TiltCard>
-          <div className="card-glow rounded-2xl border border-card-border bg-card-bg overflow-hidden reveal visible reveal-delay-1">
-            <div className="p-8">
-              {/* Header */}
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2.5 rounded-xl bg-accent/10 text-accent">
-                  <Monitor className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">
-                    Sit-in Monitoring System
-                  </h3>
-                  <p className="text-xs text-text-muted font-mono">
-                    Full-Stack Web Application
-                  </p>
-                </div>
-              </div>
+        {/* Featured project */}
+        <article data-reveal className="panel mt-[clamp(48px,6vw,80px)] overflow-hidden p-2 sm:p-3">
+          <div className="flex items-center gap-3 px-3 pb-3 pt-1 sm:px-4" aria-hidden="true">
+            <span className="flex gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+            </span>
+            <span className="mx-auto truncate rounded-full border border-line px-4 py-1 text-xs text-[color:var(--fg-66)]">
+              ccs-sitin-aleonar.vercel.app
+            </span>
+            <span className="w-[42px]" />
+          </div>
 
-              {/* Description */}
-              <p className="text-text-secondary leading-relaxed mb-6">
-                A full-stack web application designed to automate and streamline the
-                tracking of students using computer laboratories at UC CICS. Features
-                real-time session management, online reservations, leaderboards,
-                notifications, and a comprehensive admin dashboard.
-              </p>
-
-              {/* Features grid */}
-              <div className="grid sm:grid-cols-2 gap-3 mb-6">
-                {[
-                  { icon: <Shield className="w-3.5 h-3.5" />, text: "Student registration & authentication" },
-                  { icon: <Smartphone className="w-3.5 h-3.5" />, text: "Lab reservation system" },
-                  { icon: <Server className="w-3.5 h-3.5" />, text: "Real-time session tracking" },
-                  { icon: <BarChart3 className="w-3.5 h-3.5" />, text: "Admin dashboard & analytics" },
-                  { icon: <Users className="w-3.5 h-3.5" />, text: "Leaderboard & gamification" },
-                  { icon: <Bell className="w-3.5 h-3.5" />, text: "Notification & announcement system" },
-                  { icon: <MessageSquare className="w-3.5 h-3.5" />, text: "Feedback & reporting" },
-                  { icon: <Package className="w-3.5 h-3.5" />, text: "Lab software inventory" },
-                ].map((feature) => (
-                  <div
-                    key={feature.text}
-                    className="flex items-center gap-2.5 text-sm text-text-secondary group"
-                  >
-                    <span className="text-accent group-hover:scale-110 transition-transform">
-                      {feature.icon}
-                    </span>
-                    {feature.text}
-                  </div>
-                ))}
-              </div>
-
-              {/* Tech stack */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {[
-                  "Express.js",
-                  "Node.js",
-                  "Turso/LibSQL",
-                  "bcrypt",
-                  "Multer",
-                  "Vercel",
-                ].map((tech) => (
-                  <span
-                    key={tech}
-                    className="tag-hover px-3 py-1.5 text-xs font-mono text-accent bg-accent/5 rounded-full border border-accent/15 cursor-default"
-                  >
-                    {tech}
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative block aspect-[4/3] overflow-hidden rounded-[calc(var(--radius-lg)-6px)] sm:aspect-[16/9]"
+            aria-label={`${project.title} — open the live site`}
+          >
+            <Image
+              src="/projects/sitin.jpg"
+              alt="Home page of the CCS Sit-in Monitoring System"
+              fill
+              sizes="(max-width: 1400px) 96vw, 1340px"
+              className="object-cover object-top transition-transform duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+            />
+            <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+            <span className="badge absolute right-3 top-3 px-3.5 py-2 sm:right-5 sm:top-5">
+              <span className="dot" aria-hidden="true" />
+              Live
+            </span>
+            <span className="glass absolute bottom-3 left-3 rounded-[18px] px-4 py-3 sm:inset-x-auto sm:rounded-[22px] sm:bottom-6 sm:left-6 sm:max-w-[520px] sm:px-7 sm:py-7">
+              <span className="label hidden sm:block">{project.kind}</span>
+              <span className="block text-[1.25rem] font-semibold leading-tight tracking-[-0.03em] sm:mt-3 sm:text-[clamp(1.8rem,3vw,2.7rem)] sm:leading-none sm:tracking-[-0.04em]">{project.title}</span>
+              <span className="mt-4 hidden flex-wrap gap-2 sm:flex">
+                {project.stack.slice(0, 4).map((t) => (
+                  <span key={t} className="tag">
+                    {t}
                   </span>
                 ))}
-              </div>
+              </span>
+            </span>
+          </a>
 
-              {/* Divider */}
-              <div className="border-t border-card-border pt-5 flex items-center gap-4">
-                <a
-                  href="https://ccs-sitin-aleonar.vercel.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-shine inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors group"
-                >
-                  <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  Live Demo
-                </a>
-                <a
-                  href="https://github.com/marshicode/sitin-monitoring-system"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-shine inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors group"
-                >
-                  <GithubIcon className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                  Source Code
-                </a>
-              </div>
+          <div className="grid gap-10 px-4 pb-6 pt-8 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:pb-8">
+            <div className="lg:col-span-5">
+              <p className="body-copy">{project.description}</p>
+              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Tech stack">
+                {project.stack.map((t) => (
+                  <li key={t} className="tag">
+                    {t}
+                  </li>
+                ))}
+              </ul>
             </div>
+            <ul className="grid content-start gap-x-8 sm:grid-cols-2 lg:col-span-6 lg:col-start-7" aria-label="Features">
+              {project.features.map((f) => (
+                <li key={f} className="border-b border-line py-3 text-[0.98rem] text-[color:var(--fg-86)]">
+                  {f}
+                </li>
+              ))}
+            </ul>
           </div>
-          </TiltCard>
+        </article>
 
-          {/* More projects */}
-          <div className="rounded-2xl border border-dashed border-card-border p-10 text-center reveal visible reveal-delay-2">
-            <div className="inline-flex p-3 rounded-xl bg-card-bg border border-card-border mb-4">
-              <Folder className="w-6 h-6 text-text-muted" />
+        {/* Card row */}
+        <ul className="mt-4 grid gap-4 md:grid-cols-3" aria-label="Project links">
+          <li data-reveal>
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="panel group flex h-full min-h-[220px] flex-col justify-between p-7 transition-colors duration-300 hover:bg-white/[0.04]"
+            >
+              <span className="flex items-start justify-between gap-4">
+                <span className="label">Live demo</span>
+                <span className="icon-btn transition-transform group-hover:rotate-45">
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </span>
+              <span>
+                <span className="block text-[1.375rem] font-semibold tracking-[-0.025em]">Try the live app</span>
+                <span className="body-copy mt-1 block text-[0.95rem]">ccs-sitin-aleonar.vercel.app</span>
+              </span>
+            </a>
+          </li>
+          <li data-reveal>
+            <a
+              href={project.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="panel group flex h-full min-h-[220px] flex-col justify-between p-7 transition-colors duration-300 hover:bg-white/[0.04]"
+            >
+              <span className="flex items-start justify-between gap-4">
+                <span className="label">Source code</span>
+                <span className="icon-btn transition-transform group-hover:rotate-12">
+                  <GithubIcon className="h-4 w-4" />
+                </span>
+              </span>
+              <span>
+                <span className="block text-[1.375rem] font-semibold tracking-[-0.025em]">Read the code</span>
+                <span className="body-copy mt-1 block text-[0.95rem]">marshicode/sitin-monitoring-system</span>
+              </span>
+            </a>
+          </li>
+          <li data-reveal>
+            <div className="flex h-full min-h-[220px] flex-col justify-between rounded-[var(--radius-lg)] border border-dashed border-white/15 p-7">
+              <span className="label">Next build</span>
+              <span>
+                <span className="block text-[1.375rem] font-semibold tracking-[-0.025em]">More projects coming soon</span>
+                <span className="body-copy mt-1 block text-[0.95rem]">I&apos;m always building.</span>
+              </span>
             </div>
-            <p className="text-text-muted text-sm">
-              More projects coming soon — I&apos;m always building.
-            </p>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </section>
   );
