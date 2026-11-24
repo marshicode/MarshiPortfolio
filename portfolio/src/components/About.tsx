@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Lines, contact } from "./ui";
 
 const details = [
@@ -28,28 +29,8 @@ export default function About() {
           lines={["I learn by building.", "Every project solves a real problem."]}
         />
 
-        <div className="mt-[clamp(56px,7vw,104px)] grid gap-14 lg:grid-cols-12 lg:gap-8">
-          <dl data-reveal className="lg:col-span-5 border-t border-line">
-            {details.map((d) => (
-              <div
-                key={d.label}
-                className="grid grid-cols-[minmax(7.5rem,40%)_1fr] gap-4 border-b border-line py-4"
-              >
-                <dt className="label self-center">{d.label}</dt>
-                <dd className="min-w-0 break-words text-[0.98rem] text-[color:var(--fg-86)]">
-                  {d.href ? (
-                    <a href={d.href} className="underline decoration-white/25 underline-offset-4 hover:decoration-white">
-                      {d.value}
-                    </a>
-                  ) : (
-                    d.value
-                  )}
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="space-y-6 lg:col-span-6 lg:col-start-7">
+        <div className="mt-[clamp(56px,7vw,104px)] grid gap-14 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20">
+          <div className="space-y-6 lg:col-span-6 lg:col-start-7 lg:row-start-1">
             <p data-reveal className="lead">
               I&apos;m a student at the University of Cebu, College of Information &amp;
               Computer Studies, pursuing a career in full-stack software engineering. I
@@ -70,6 +51,38 @@ export default function About() {
               ))}
             </ul>
           </div>
+          {/* Scaled from the top so the generator mark in the bottom-right corner stays out of frame */}
+          <figure
+            data-reveal
+            className="group relative aspect-square w-full max-w-[340px] overflow-hidden rounded-[var(--radius-lg)] border border-line bg-[#0f0f12] lg:col-span-4 lg:col-start-1 lg:row-start-2 lg:max-w-none"
+          >
+            <Image
+              src="/profile.png"
+              alt="Rene James Aleonar"
+              fill
+              sizes="(max-width: 1024px) 340px, 420px"
+              className="origin-top scale-[1.2] object-cover grayscale brightness-[0.82] contrast-[1.08] transition-[filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0 group-hover:brightness-100 group-hover:contrast-100"
+            />
+          </figure>
+          <dl data-reveal className="border-t border-line lg:col-span-6 lg:col-start-7 lg:row-start-2 lg:self-center">
+            {details.map((d) => (
+              <div
+                key={d.label}
+                className="grid grid-cols-[minmax(7.5rem,40%)_1fr] gap-4 border-b border-line py-4"
+              >
+                <dt className="label self-center">{d.label}</dt>
+                <dd className="min-w-0 break-words text-[0.98rem] text-[color:var(--fg-86)]">
+                  {d.href ? (
+                    <a href={d.href} className="underline decoration-white/25 underline-offset-4 hover:decoration-white">
+                      {d.value}
+                    </a>
+                  ) : (
+                    d.value
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
         <ul
