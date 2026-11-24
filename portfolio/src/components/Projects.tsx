@@ -8,7 +8,8 @@ type Project = {
   live: string;
   /** Public repository. Leave unset for private code: the source card is hidden. */
   source?: string;
-  image: { src: string; alt: string };
+  /** `position` is a Tailwind object-position class; defaults to object-top. */
+  image: { src: string; alt: string; position?: string };
   description: string;
   features: string[];
   stack: string[];
@@ -39,7 +40,12 @@ const projects: Project[] = [
     title: "Atomail",
     kind: "Browser app · Random email generator",
     live: "https://atomail.vercel.app",
-    image: { src: "/projects/atomail.jpg", alt: "Atomail in dark theme with a freshly generated gmail.com address" },
+    image: {
+      src: "/projects/atomail.jpg",
+      alt: "Atomail generator in dark theme showing a freshly generated gmail.com address",
+      // Anchor left so the 4:3 mobile crop keeps the whole address in view.
+      position: "object-left-top",
+    },
     description:
       "Random email address generator. Pick any of 71 email domains (or type your own), generate a unique address in one click, set your own password and copy the credentials.",
     features: [
@@ -102,7 +108,7 @@ export default function Projects() {
                   alt={project.image.alt}
                   fill
                   sizes="(max-width: 1400px) 96vw, 1340px"
-                  className="object-cover object-top transition-transform duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                  className={`object-cover ${project.image.position ?? "object-top"} transition-transform duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]`}
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
                 <span className="badge absolute right-3 top-3 px-3.5 py-2 sm:right-5 sm:top-5">
