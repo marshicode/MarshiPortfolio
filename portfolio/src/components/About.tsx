@@ -16,7 +16,7 @@ const stats = [
   { value: "16", label: "Technologies", text: "Across frontend, backend, databases and tooling." },
   { value: "8", label: "Features shipped", text: "In the Sit-in Monitoring System, from reservations to analytics." },
   { value: "2", label: "Certificates", text: "Cisco CCNA coursework and the 12th UC CCS ICT Congress." },
-  { value: "1", label: "Live app", text: "Deployed and public at ccs-sitin-aleonar.vercel.app." },
+  { value: "2", label: "Live apps", text: "Deployed and public: the Sit-in Monitoring System and Atomail." },
 ];
 
 export default function About() {
